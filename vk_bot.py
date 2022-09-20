@@ -4,7 +4,8 @@ import vk_api
 import vk_api.bot_longpoll
 from _token import token
 from _token import group_id
-
+""" В отдельном файле _token хранится значения token и group_id !
+"""
 
 
 class Bot:
