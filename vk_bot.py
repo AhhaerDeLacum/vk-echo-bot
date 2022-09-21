@@ -9,19 +9,21 @@ from _token import group_id
 """
 log = logging.getLogger('bot')
 
-stream_handler = logging.StreamHandler()
-stream_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+
+def configure_logging():
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s", "%d-%m-%Y %H:%M:%S"))
+    stream_handler.setLevel(logging.DEBUG)
+    log.addHandler(stream_handler)
+
+    file_handler = logging.FileHandler('bot.log', 'w', 'utf8')
+    file_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s", "%d-%m-%Y %H:%M:%S"))
+    file_handler.setLevel(logging.DEBUG)
+    log.addHandler(file_handler)
+    log.setLevel(logging.DEBUG)#Общий уровень DEBUG
 
 
-file_handler = logging.FileHandler('bot.log', 'w', 'utf8')
-file_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
 
-log.addHandler(stream_handler)
-log.addHandler(file_handler)
-log.setLevel(logging.DEBUG)
-
-stream_handler.setLevel(logging.DEBUG)
-file_handler .setLevel(logging.DEBUG)
 # logging.
 
 class Bot:
@@ -43,14 +45,14 @@ class Bot:
 
     def on_event(self, event):
         if event.type == VkBotEventType.MESSAGE_NEW:
-            log.info('Отправили это же сообщение обратно этому пользователю')
+            log.debug('Отправили это же сообщение обратно этому пользователю')
             self.api_vk.messages.send(
                 message=event.message.text,#message.text,
                 random_id=random.randint(0, 2 ** 20),
                 peer_id=event.message.peer_id,
             )
         else:
-            log.debug("Неизвестное событие - %s", event.type)
+            log.info("Неизвестное событие - %s", event.type)
             # print("Неизвестное событие - ", event.type)
 
 
@@ -58,5 +60,6 @@ class Bot:
 
 
 if __name__ == '__main__':
+    configure_logging()
     bot = Bot(group_id, token)
     bot.run()
