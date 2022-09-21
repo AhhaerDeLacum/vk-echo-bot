@@ -8,9 +8,20 @@ from _token import group_id
 """ В отдельном файле _token хранится значения token и group_id !
 """
 log = logging.getLogger('bot')
+
 stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+
+
+file_handler = logging.FileHandler('bot.log', 'w', 'utf8')
+file_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+
 log.addHandler(stream_handler)
+log.addHandler(file_handler)
 log.setLevel(logging.DEBUG)
+
+stream_handler.setLevel(logging.DEBUG)
+file_handler .setLevel(logging.DEBUG)
 # logging.
 
 class Bot:
