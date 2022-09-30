@@ -79,7 +79,7 @@ class Bot:
         # peer_id = message['peer_id']
         # text = message['text']
         user_id = message['peer_id']#event.object.peer_id #event.message.peer_id, !!!!!!!
-        text = message['text'].lower()#event.object.text #event.message.text!!!!!!!!!!
+        text = message['text']#event.object.text #event.message.text!!!!!!!!!!
         if user_id in self.user_states:
             # continue scenario
             text_to_send = self.continue_scenario(user_id, text)
@@ -87,7 +87,7 @@ class Bot:
             #search intent
             for intent in settings.INTENTS:
                 log.debug(f'User gets {intent}')
-                if any(token in text for token in intent['tokens']):
+                if any(token in text.lower() for token in intent['tokens']):
                     #run intent
                     if intent['answer']:
                         text_to_send = intent['answer']
