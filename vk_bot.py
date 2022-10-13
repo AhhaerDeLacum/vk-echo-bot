@@ -137,7 +137,7 @@ class Bot:
         firs_step = scenario['first_step']
         step = scenario['steps'][firs_step]
         self.send_step(step, user_id, text, context={})
-        # self.send_text(step['text'], user_id) лишний ответ отправлялся
+        #self.send_text(step['text'], user_id) #лишний ответ отправлялся
         UserState(user_id=str(user_id), scenario_name=scenario_name, step_name=firs_step, context={})
 
     def continue_scenario(self, text, state, user_id):

@@ -13,7 +13,7 @@ re_email = re.compile(r'(\b[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\b)')
 def handler_name(text, context):
     match = re.match(re_name, text)
     if match:
-        context['name'] = text[0]
+        context['name'] = text
         return True
     else:
         return False
